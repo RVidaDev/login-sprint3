@@ -1,18 +1,36 @@
+from getpass import getpass
 
 usuarios = []
 
 def cadastrar_usuario():
-    nome = input("Digite o Nome: ")
-    email = input("Digite seu email: ")
-    
-    for usuario in usuarios:
-        if usuario['nome'] == nome or usuario['email'] == email:
-            print("Usuário já cadastrado.")
+    try:
+        nome = input("Digite o Nome: ")
+        email = input("Digite seu email: ")
+        
+        if "@" not in email:
+            raise ValueError("O email do usuário não é válido.")
+        
+        senha = getpass(prompt="digite sua senha: ")
+        confirmSenha = getpass(prompt="confirme sua senha: ")    
+        
+        if senha == confirmSenha:
+            print("Senha cadastrada!")
+        else:
+            print("As senhas estão diferentes! Tente novamente")
             return
-    
-    usuarios.append({'nome': nome, 'email': email})
-    print(f"cadastro de {nome} realizado com sucesso.")
-    
+            
+        
+        for usuario in usuarios:
+            if usuario['nome'] == nome or usuario['email'] == email:
+                print("Usuário já cadastrado.")
+                return
+        
+        usuarios.append({'nome': nome, 'email': email})
+        print(f"cadastro de {nome} realizado com sucesso.")
+        
+    except ValueError as erro:
+        print("Erro:", erro)
+        
 def listar_usuarios():
     for usuario in usuarios:
         print("Cadastro: ")
