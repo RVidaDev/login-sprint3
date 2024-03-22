@@ -1,23 +1,31 @@
-import pandas as pd
+from pathlib import Path
 
 # Função para ler o CSV e converter em uma lista de dicionários
-def csv_to_list_of_dicts(file_path):
+def csv_pra_dict(caminho):
     try:
-        # Lê o arquivo CSV e converte em um DataFrame
-        df = pd.read_csv(file_path, error_bad_lines=False)
-        
-        # Converte o DataFrame em uma lista de dicionários
-        data_list = df.to_dict(orient='records')
-        
+        with Path(caminho).open() as file:
+            #nomes_coluna vai ler o nome da coluna, tirar espaços em ranco -
+            # e separar cada elemento corretamente usando virgula como separador
+            # ATENÇÂO pode não ser esse separador no csv
+            nomes_coluna = file.readline().strip().split(",")
+            data_list = []
+            for linha in file:
+                #vai ler uma linha e dividir a linha em campos como se fosse uma lista de string
+                field = linha.strip().split(",")
+                #cria um dicionário pra cada linha
+                linha_dict = {nomes_coluna[i]: field[i] for i in range(len(nomes_coluna))}
+                data_list.append(linha_dict)
         return data_list
+    
     except FileNotFoundError:
         print("Arquivo não encontrado.")
         return []
-    except pd.errors.ParserError:
-        print("Erro ao analisar o arquivo CSV.")
+    except Exception as e:
+        print(f"Erro ao analisar o arquivo CSV: {e}")
         return []
-
+            
+    
 # Exemplo de uso
-file_path = 'seu_arquivo.csv'
-data = csv_to_list_of_dicts(file_path)
+file_path = Path('login-sprint3\click.csv')
+data = csv_pra_dict(file_path)
 print(data)
