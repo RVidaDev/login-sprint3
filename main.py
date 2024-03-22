@@ -18,6 +18,6 @@ def csv_to_list_of_dicts(file_path):
         return []
 
 # Exemplo de uso
-file_path = 'seu_arquivo.csv'
+file_path = 'arquivo.csv'
 data = csv_to_list_of_dicts(file_path)
 print(data)
