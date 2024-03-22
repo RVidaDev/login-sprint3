@@ -26,6 +26,11 @@ def csv_pra_dict(caminho):
             
     
 # Exemplo de uso
+<<<<<<< HEAD
 file_path = Path('login-sprint3\click.csv')
 data = csv_pra_dict(file_path)
+=======
+file_path = 'arquivo.csv'
+data = csv_to_list_of_dicts(file_path)
+>>>>>>> 00dee12e3cbc01181a437cd3439b9df9e619f3fd
 print(data)
